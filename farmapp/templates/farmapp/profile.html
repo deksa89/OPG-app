@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+    <h1>Pregled profila</h1>
+    {% if user_profile %}
+    <p>Ime: {{ user_profile.ime }}</p>
+    <p>Prezime: {{ user_profile.prezime }}</p>
+    <p>Naziv OPG-a: {{ user_profile.naziv_opg }}</p>
+    <p>Adresa: {{ user_profile.adresa }}</p>
+    <p>Telefon: {{ user_profile.telefon }}</p>
+    {% else %}
+    <p>Korisnik nije pronađen!</p>
+    {% endif %}
+</body>
+</html>
