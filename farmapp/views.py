@@ -103,6 +103,6 @@ def register(request):
     return render(request, 'farmapp/register.html', {'form': form})
 
 
-def errand_logout(request):
+def product_logout(request):
     logout(request)
     return redirect('login')

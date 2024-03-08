@@ -8,7 +8,6 @@
 
 body.addprod {
     font-family: var(--font-family);
-    background-color: var(--background-color);
     padding: 20px;
     display: flex;
     flex-direction: column;

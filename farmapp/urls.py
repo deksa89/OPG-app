@@ -8,7 +8,7 @@ urlpatterns = [
     path('', views.welcome, name='welcome'),
     path('register/', views.register, name='register'),
     path('login/', LoginView.as_view(authentication_form=CustomAuthenticationForm, template_name='farmapp/login.html'), name='login'),
-    path('logout/', LogoutView.as_view(), name='logout'),
+    path('logout/', views.product_logout, name='logout'),
     path('product/<int:product_id>/', views.product_details, name='product_details'),
     path('list_products', views.list_products, name="list_products"),
     path('add_product/', views.add_product, name="add_product"),
@@ -16,5 +16,4 @@ urlpatterns = [
     path('delete_product/<int:product_id>/', views.delete_product, name='delete_product'),
     path('profile/', views.view_profile, name='view_profile'),
     path('edit_profile/', views.edit_profile, name='edit_profile'),
-
 ]

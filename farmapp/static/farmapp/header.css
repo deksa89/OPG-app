@@ -1,9 +1,7 @@
-/* Define basic variables for consistent styling */
 :root {
-    --primary-color: #4CAF50; /* Primary color for your theme */
+    --primary-color: #4CAF50;
     --text-color: #333;
     --font-family: 'Arial', sans-serif;
-    --background-color: #f8f8f8; /* A light background color */
 }
 
 .header {
@@ -19,14 +17,14 @@
 }
 
 .header__img {
-    width: 50px; /* Adjust as necessary */
+    width: 50px;
     height: auto;
 }
 
 .header-btns {
     display: flex;
     justify-content: flex-end;
-    flex: 2; /* Adjust based on your design needs */
+    flex: 2;
 }
 
 .header-btns a {
@@ -43,7 +41,6 @@
     background-color: darken(var(--primary-color), 10%);
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .header {
         flex-direction: column;
@@ -55,6 +52,6 @@
 
     .header-btns a {
         display: block;
-        margin: 5px auto; /* Center buttons in mobile view */
+        margin: 5px auto;
     }
 }
