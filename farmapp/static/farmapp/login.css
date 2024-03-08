@@ -87,6 +87,11 @@ body {
     margin: 0 37px;
 }
 
+.errorlist.nonfield {
+    list-style-type: none;
+    color: red;
+}
+
 @media (max-width: 768px) {
     .login__form {
         width: 90%;

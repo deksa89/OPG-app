@@ -66,3 +66,8 @@ body {
 .register__btn:hover, .register__login:hover {
     background-color: #4CAF50; 
 }
+
+.errorlist {
+    list-style-type: none;
+    color: red;
+}
