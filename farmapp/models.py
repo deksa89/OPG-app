@@ -12,7 +12,6 @@ class Farm(models.Model):
     email = models.EmailField()
     email_potvrda = models.EmailField()
 
-    # Make sure to define a __str__ method
     def __str__(self):
         return f"{self.ime} {self.prezime} - {self.naziv_opg}"
 

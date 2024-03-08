@@ -49,7 +49,13 @@ class CustomUserCreationForm(UserCreationForm):
                 email_potvrda=self.cleaned_data['email_potvrda']
             )
         return user
-    
+
+
+class EditUserProfileForm(forms.ModelForm):
+    class Meta:
+        model = Farm
+        fields = ['ime', 'prezime', 'naziv_opg', 'adresa', 'telefon']
+
     
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=20)

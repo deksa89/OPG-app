@@ -4,13 +4,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages 
 
 from .models import Product, Farm
-from .forms import ProductForm, CustomUserCreationForm
+from .forms import ProductForm, CustomUserCreationForm, EditUserProfileForm
 
 
-# Create your views here.
 @login_required
 def list_products(request):
-    products = Product.objects.all()  # Retrieve all products from the database
+    products = Product.objects.all()
     user_profile = Farm.objects.get(user=request.user)
     return render(request, 'farmapp/product_list.html', {'products': products, 'user_profile': user_profile})
 
@@ -26,10 +25,9 @@ def add_product(request):
         form = ProductForm(request.POST)
         if form.is_valid():
             product = form.save(commit=False)
-            product.farm = user_farm  # Set the product's farm to the user's farm
+            product.farm = user_farm
             product.save()
-            # Redirect to a new URL:
-            return redirect('list_products')  # Assuming 'product_list' is the URL name for listing products
+            return redirect('list_products')
     else:
         form = ProductForm()
 
@@ -45,14 +43,13 @@ def product_details(request, product_id):
 def edit_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     if product.farm.user != request.user:
-        # If the product does not belong to the logged-in user, redirect or show an error
-        return redirect('list_products')  # Replace with your appropriate URL
+        return redirect('list_products')
 
     if request.method == 'POST':
         form = ProductForm(request.POST, instance=product)
         if form.is_valid():
             form.save()
-            return redirect('list_products')  # Replace with your appropriate URL
+            return redirect('list_products') 
     else:
         form = ProductForm(instance=product)
 
@@ -74,16 +71,19 @@ def view_profile(request):
     return render(request, 'farmapp/profile.html', {'user_profile': user_profile})
 
 
-# @login_required
-# def edit_profile(request):
-#     if request.method == 'POST':
-#         form = UserProfileEditForm(request.POST, instance=request.user)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('view_profile')  # Redirect to the profile view
-#     else:
-#         form = UserProfileEditForm(instance=request.user)
-#     return render(request, 'farmapp/edit_profile.html', {'form': form})
+@login_required
+def edit_profile(request):
+    profile = get_object_or_404(Farm, user=request.user)
+
+    if request.method == 'POST':
+        form = EditUserProfileForm(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('view_profile')  # Redirect to the profile view
+    else:
+        form = EditUserProfileForm(instance=profile)
+
+    return render(request, 'farmapp/edit_profile.html', {'form': form})
 
 
 def register(request):
