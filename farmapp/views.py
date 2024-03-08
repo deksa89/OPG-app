@@ -11,7 +11,8 @@ from .forms import ProductForm, CustomUserCreationForm
 @login_required
 def list_products(request):
     products = Product.objects.all()  # Retrieve all products from the database
-    return render(request, 'farmapp/product_list.html', {'products': products})
+    user_profile = Farm.objects.get(user=request.user)
+    return render(request, 'farmapp/product_list.html', {'products': products, 'user_profile': user_profile})
 
 @login_required
 def add_product(request):
@@ -33,6 +34,12 @@ def add_product(request):
         form = ProductForm()
 
     return render(request, 'farmapp/add_product.html', {'form': form})
+
+
+def product_details(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    return render(request, 'farmapp/product_details.html', {'product': product})
+
 
 @login_required
 def edit_product(request, product_id):

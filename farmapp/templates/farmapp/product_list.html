@@ -40,7 +40,7 @@
     <header>
         <nav class="header">
           <div class="logo">
-            <img src="path/to/your/logo.png" alt="Company Logo">
+            <img src="path/to/your/logo.png" alt={{ user_profile.naziv_opg }}>
           </div>
           <div class="header-left">
             <a href="{% url 'list_products' %}">Proizvod</a>
@@ -48,13 +48,18 @@
             <a href="{% url 'logout' %}">Odjava</a>
           </div>
           <div class="header-right">
-              <a href="/add_product">Dodaj proizvod</a>
+              <a href="{% url 'add_product' %}">Dodaj proizvod</a>
           </div>
         </nav>
     </header>
 
     <div>
     <h2>Lista proizvoda</h2>
+    {% if user_profile %}
+    <h1>{{ user_profile.naziv_opg }}</h1>
+    {% else %}
+    <h1>Opg ne postoji</h1>
+    {% endif %}
     <table>
         <thead>
             <tr>
@@ -70,7 +75,7 @@
             <tr>
                 <td>{{ product.name }}</td>
                 <td>{{ product.get_category_display }}</td>
-                <td>{{ product.detail }}</td>
+                <td><a href="{% url 'product_details' product.id %}">Detaljnije</a></td>
                 <td><a href="{% url 'edit_product' product.id %}">Uređivanje</a></td>
                 <td><a href="{% url 'delete_product' product.id %}" class="delete-link" onclick="return confirmDelete()">Delete</a></td>
             </tr>
