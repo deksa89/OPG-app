@@ -21,7 +21,6 @@ def list_products(request):
 def add_product(request):
     try:
         user_farm = Farm.objects.get(user=request.user)
-        print("farma: ", user_farm)
     except Farm.DoesNotExist:
         print("farm doesnt exist")
     

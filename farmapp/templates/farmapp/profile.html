@@ -1,22 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Profile</title>
-</head>
-<body>
-    <a href="{% url 'list_products' %}">Natrag</a>
-    <h1>Pregled profila</h1>
-    {% if user_profile %}
-    <p>Ime: {{ user_profile.ime }}</p>
-    <p>Prezime: {{ user_profile.prezime }}</p>
-    <p>Naziv OPG-a: {{ user_profile.naziv_opg }}</p>
-    <p>Adresa: {{ user_profile.adresa }}</p>
-    <p>Telefon: {{ user_profile.telefon }}</p>
-    {% else %}
-    <p>Korisnik nije pronađen!</p>
-    {% endif %}
+{% extends 'farmapp/main.html' %}
+{% load static %}
 
-    <a href="{% url 'edit_profile' %}">Ažuriraj</a>
-</body>
-</html>
+{% block site_css %}<link rel="stylesheet" href="{% static 'farmapp/profile.css' %}">{% endblock %}
+{% block title %}{% endblock %}
+
+{% block content %}
+    {% include 'farmapp/header.html' %}
+    <body class="profile">
+        <h1 class="profile_name">Pregled profila</h1>
+            {% if user_profile %}
+        <p class="profile__name">Ime: {{ user_profile.ime }}</p>
+        <p class="profile_lastname">Prezime: {{ user_profile.prezime }}</p>
+        <p class="profile__opg">Naziv OPG-a: {{ user_profile.naziv_opg }}</p>
+        <p class="profile__address">Adresa: {{ user_profile.adresa }}</p>
+        <p class="profile__phone">Telefon: {{ user_profile.telefon }}</p>
+        {% else %}
+            <p>Korisnik nije pronađen!</p>
+        {% endif %}
+
+        <a class="profile__edit" href="{% url 'edit_profile' %}">Ažuriraj</a>
+    </body>
+{% endblock %}

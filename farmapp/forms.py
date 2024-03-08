@@ -9,6 +9,12 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields = ['name', 'category', 'detail']
 
+    def __init__(self, *args, **kwargs):
+        super(ProductForm, self).__init__(*args, **kwargs)
+        self.fields['name'].label = 'Ime'
+        self.fields['category'].label = 'Kategorija'
+        self.fields['detail'].label = 'Detaljno'
+
 
 class CustomAuthenticationForm(AuthenticationForm):
     username = forms.EmailField(label=_("Email adresa"), widget=forms.TextInput(attrs={'autofocus': True}))

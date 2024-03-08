@@ -1,15 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Podaci o proizvodu</title>
-</head>
+{% extends 'farmapp/main.html' %}
+{% load static %}
+
+{% block site_css %}<link rel="stylesheet" href="{% static 'farmapp/product_details.css' %}">{% endblock %}
+{% block title %}{% endblock %}
+
+{% block content %}
+{% include 'farmapp/header.html' %}
 <body>
-    <h1>Podaci o proizvodu</h1>
-    <div class="product-details">
-        <h2>{{ product.name }}</h2>
-        <p><strong>Kategorija:</strong> {{ product.get_category_display }}</p>
-        <p><strong>Detaljnije:</strong> {{ product.detail }}</p>
+    <h1 class="proddetail_title">Podaci o proizvodu</h1>
+    <div class="proddetail">
+        <h2 class="proddetail__prod">{{ product.name }}</h2>
+        <p class="proddetail__category"><strong>Kategorija:</strong> {{ product.get_category_display }}</p>
+        <p class="proddetail__detail"><strong>Detaljnije:</strong> {{ product.detail }}</p>
     </div>
 </body>
 </html>
+{% endblock %}
