@@ -5,6 +5,7 @@
     <title>Profile</title>
 </head>
 <body>
+    <a href="{% url 'list_products' %}">Natrag</a>
     <h1>Pregled profila</h1>
     {% if user_profile %}
     <p>Ime: {{ user_profile.ime }}</p>

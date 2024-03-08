@@ -1,6 +1,7 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 from .models import Product, Farm
 
 class ProductForm(forms.ModelForm):
@@ -9,15 +10,29 @@ class ProductForm(forms.ModelForm):
         fields = ['name', 'category', 'detail']
 
 
+class CustomAuthenticationForm(AuthenticationForm):
+    username = forms.EmailField(label=_("Email adresa"), widget=forms.TextInput(attrs={'autofocus': True}))
+    password = forms.CharField(label=_("Lozinka"), strip=False, widget=forms.PasswordInput)
+
+
 class CustomUserCreationForm(UserCreationForm):
+    password1 = forms.CharField(label='Lozinka', widget=forms.PasswordInput)
+    
     ime = forms.CharField(label='Ime', max_length=30)
     prezime = forms.CharField(label='Prezime', max_length=30)
     naziv_opg = forms.CharField(label='Naziv OPG-a', max_length=100)
     adresa = forms.CharField(label='Adresa', max_length=255)
     telefon = forms.CharField(label='Telefon', max_length=20)
-    email = forms.EmailField(label='Potvrda emaila')
-    email_potvrda = forms.EmailField(label='Potvrda emaila')
+    email = forms.EmailField(label='Email')
+    email_potvrda = forms.EmailField(label='Potvrdi email')
     lozinka = forms.PasswordInput()
+    
+    def __init__(self, *args, **kwargs):
+        super(CustomUserCreationForm, self).__init__(*args, **kwargs)
+        
+        self.fields['password1'].help_text = ''
+        self.fields['password2'].help_text = ''
+        del self.fields['password2'] 
 
     class Meta:
         model = User
@@ -55,8 +70,3 @@ class EditUserProfileForm(forms.ModelForm):
     class Meta:
         model = Farm
         fields = ['ime', 'prezime', 'naziv_opg', 'adresa', 'telefon']
-
-    
-class LoginForm(forms.Form):
-    username = forms.CharField(max_length=20)
-    password = forms.CharField(max_length=20, widget=forms.PasswordInput)

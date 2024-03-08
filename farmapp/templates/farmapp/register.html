@@ -1,15 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register</title>
-</head>
+{% extends 'farmapp/main.html' %}
+{% load static %}
+
+{% block site_css %}<link rel="stylesheet" href="{% static 'farmapp/register.css' %}">{% endblock %}
+{% block title %}{% endblock %}
+
+{% block content %}
 <body>
-    <h2>Register</h2>
-    <form method="post">
+    <h2 class="register">Registracija korisnika</h2>
+    <form class="register__form" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Register</button>
+
+        <div class="register__btns">
+            <button class="register__btn" type="submit">Register</button>
+
+            <div class="register_lg">
+                <p>Ako imaš račun </p>
+                <a class="register__login" href="{% url 'login' %}">Ulogiraj se</a>
+            </div>
+        </div>
     </form>
 </body>
 </html>
+{% endblock %}
