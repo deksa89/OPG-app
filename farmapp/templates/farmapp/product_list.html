@@ -1,37 +1,6 @@
 {% extends 'farmapp/main.html' %}
 {% load static %}
 
-{% block add_script %}
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var deleteLinks = document.querySelectorAll('.delete-link');
-        
-            deleteLinks.forEach(function(link) {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    var deleteUrl = this.getAttribute('href'); // Save the URL for the delete action
-        
-                    // Show the popup
-                    document.querySelector('.popup-overlay').style.display = 'block'; // Show the overlay
-                    document.querySelector('.confirmation-popup').style.display = 'block'; // Show the popup
-
-        
-                    // When the confirm button is clicked, proceed with deletion
-                    document.getElementById('confirm-delete').onclick = function() {
-                        window.location.href = deleteUrl;
-                    };
-        
-                    // Hide the popup if cancel is clicked
-                    document.getElementById('cancel-delete').onclick = function() {
-                        document.querySelector('.popup-overlay').style.display = 'none'; // Hide the overlay
-                        document.querySelector('.confirmation-popup').style.display = 'none'; // Hide the popup
-                    };
-                });
-            });
-        });
-    </script>
-{% endblock %}
-
 {% block site_css %}<link rel="stylesheet" href="{% static 'farmapp/product_list.css' %}">{% endblock %}
 {% block title %}{% endblock %}
 
@@ -47,11 +16,11 @@
     <div class="prodlist__addprod">
         <a href="{% url 'add_product' %}">Dodaj proizvod</a>
     </div>
-    <table>
+    <table id="sortableTable">
         <thead>
             <tr>
-                <th>Naziv proizvoda</th>
-                <th>Kategorija</th>
+                <th onclick="sortTable(0)">Naziv proizvoda<span class="sort-arrow"></span></th>
+                <th onclick="sortTable(1)">Kategorija<span class="sort-arrow"></span></th>
                 <th>Detalji</th>
                 <th>Uređivanje</th>
                 <th>Brisanje</th>
@@ -79,4 +48,6 @@
             {% endfor %}
         </tbody>
     </table>
+    <script src="{% static 'farmapp/js/sortable.js' %}"></script>
+    <script src="{% static 'farmapp/js/delete_prompt.js' %}"></script>
 {% endblock %}

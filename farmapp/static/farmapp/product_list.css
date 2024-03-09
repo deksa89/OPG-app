@@ -117,3 +117,8 @@ tr:nth-child(even) {
 #cancel-delete:hover {
     background-color: darken(#ccc, 10%);
 }
+
+.sort-arrow {
+    display: inline-block;
+    margin-left: 5px;
+}
