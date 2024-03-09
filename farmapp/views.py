@@ -93,7 +93,6 @@ def register(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            print("user: ", user)
             user.save()
             login(request, user)
             return redirect('list_products')
