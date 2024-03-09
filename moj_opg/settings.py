@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'moj_opg.wsgi.application'
 #     }
 # }
 
-print(config('DATABASE_USER'))
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
