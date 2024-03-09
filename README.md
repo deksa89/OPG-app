@@ -1,6 +1,6 @@
 # OPG-app
 
-I made this little CRUD app as a part of job evaluation process. It is built with Django and allows users to create, view, update and delete farm products once a user is registered.
+I made this little CRUD app as a part of job evaluation process in CARNET. It is built with Django and allows users to create, view, update and delete farm products once a user is registered.
 
 
 ## Features
