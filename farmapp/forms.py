@@ -55,7 +55,7 @@ class CustomUserCreationForm(UserCreationForm):
         return cleaned_data
 
     def save(self, commit=True):
-        user = super(CustomUserCreationForm, self).save(commit=False)      #NAPISATI README, 
+        user = super(CustomUserCreationForm, self).save(commit=False)
         user.username = self.cleaned_data['email']
         user.email = self.cleaned_data['email']
         if commit:

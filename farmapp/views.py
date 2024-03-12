@@ -19,10 +19,7 @@ def list_products(request):
 
 @login_required
 def add_product(request):
-    try:
-        user_farm = Farm.objects.get(user=request.user)
-    except Farm.DoesNotExist:
-        print("farm doesnt exist")
+    user_farm = Farm.objects.get(user=request.user)
     
     if request.method == 'POST':
         form = ProductForm(request.POST)
