@@ -63,10 +63,7 @@ def delete_product(request, product_id):
 
 @login_required
 def view_profile(request):
-    try:
-        user_profile = Farm.objects.get(user=request.user)
-    except Farm.DoesNotExist:
-        user_profile = None
+    user_profile = Farm.objects.get(user=request.user)
     return render(request, 'farmapp/profile.html', {'user_profile': user_profile})
 
 
