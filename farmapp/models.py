@@ -10,7 +10,6 @@ class Farm(models.Model):
     adresa = models.CharField(max_length=255)
     telefon = models.IntegerField("Telefon")
     email = models.EmailField()
-    email_potvrda = models.EmailField()
 
     def __str__(self):
         return f"{self.ime} {self.prezime} - {self.naziv_opg}"
@@ -29,4 +28,4 @@ class Product(models.Model):
     detail = models.TextField()
 
     def __str__(self):
-        return f"{self.name} ({self.get_category_display()})"
+        return f"{self.name.capitalize()} ({self.category.capitalize()})"

@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from .models import Product, Farm
 
@@ -31,18 +32,20 @@ class CustomUserCreationForm(UserCreationForm):
     telefon = forms.CharField(label='Telefon', max_length=20)
     email = forms.EmailField(label='Email')
     email_potvrda = forms.EmailField(label='Potvrdi email')
-    lozinka = forms.PasswordInput()
     
     def __init__(self, *args, **kwargs):
         super(CustomUserCreationForm, self).__init__(*args, **kwargs)
-        
-        self.fields['password1'].help_text = ''
-        self.fields['password2'].help_text = ''
-        del self.fields['password2'] 
+        del self.fields['password2']
 
     class Meta:
         model = User
         fields = ('ime', 'prezime', 'naziv_opg', 'adresa', 'telefon', 'email', 'email_potvrda', 'password1')
+        
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise ValidationError(_("A user with that email already exists."))
+        return email
 
     def clean(self):
         cleaned_data = super().clean()
@@ -67,7 +70,7 @@ class CustomUserCreationForm(UserCreationForm):
                 naziv_opg=self.cleaned_data['naziv_opg'],
                 adresa=self.cleaned_data['adresa'],
                 telefon=self.cleaned_data['telefon'],
-                email_potvrda=self.cleaned_data['email_potvrda']
+                email = self.cleaned_data['email'],
             )
         return user
 

@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages 
 
 from .models import Product, Farm
 from .forms import ProductForm, CustomUserCreationForm, EditUserProfileForm
