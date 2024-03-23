@@ -26,4 +26,4 @@ I made this little CRUD app as a part of job evaluation process in CARNET. It is
 ## Dependencies
 
 - Python 3.10.12
-- Django 4.2
+- Django 5.0.3
