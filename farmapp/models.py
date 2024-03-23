@@ -1,8 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+import uuid
 
 class Farm(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     ime = models.CharField("Ime", max_length=30)
     prezime = models.CharField("Prezime", max_length=30)
@@ -14,8 +15,8 @@ class Farm(models.Model):
     def __str__(self):
         return f"{self.ime} {self.prezime} - {self.naziv_opg}"
 
-
 class Product(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     CATEGORY_CHOICES = [
         ('milk_product', 'Mliječni proizvodi'),
         ('fruit_product', 'Voće'),
