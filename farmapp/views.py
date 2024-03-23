@@ -87,8 +87,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             user.save()
-            login(request, user)
-            return redirect('list_products')
+            return redirect('login')
     else:
         form = CustomUserCreationForm()
     return render(request, 'farmapp/register.html', {'form': form})
