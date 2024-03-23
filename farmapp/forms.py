@@ -44,7 +44,7 @@ class CustomUserCreationForm(UserCreationForm):
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
-            raise ValidationError(_("A user with that email already exists."))
+            raise ValidationError(_("Korisnik s tom email adresom već postoji!"))
         return email
 
     def clean(self):
@@ -53,7 +53,7 @@ class CustomUserCreationForm(UserCreationForm):
         email_potvrda = cleaned_data.get('email_potvrda')
 
         if email and email_potvrda and email != email_potvrda:
-            self.add_error('email_potvrda', "Emails must match")
+            self.add_error('email_potvrda', "Emailovi koje ste unjeli moraju biti isti!")
 
         return cleaned_data
 
