@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
+from rest_framework.decorators import api_view
 
 from .models import Product, Farm
 from .forms import ProductForm, CustomUserCreationForm, EditUserProfileForm
 
-
+@api_view(['GET'])
 def welcome(request):
     return render(request, 'farmapp/welcome.html')
 
