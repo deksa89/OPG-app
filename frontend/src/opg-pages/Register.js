@@ -24,10 +24,12 @@ function Register() {
     }));
   };
 
+  console.log("formData: ", formData)
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const response = await axios.post('http://localhost:8000/register', formData);
+        const response = await axios.post('http://localhost:8000/register', formData);   //TREBA SPOJITI REACT S POSTGRESQL-om
         console.log(response.data);
         alert('Registracija uspješna!');
         navigate('/login');

@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'farmapp',
 ]
 
+CORS_ALLOWED_ORIGIN = ['http://localhost:3000']
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

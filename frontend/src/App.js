@@ -4,7 +4,14 @@ import WelcomePage from './opg-pages/WelcomePage';
 import Login from './opg-pages/Login';
 import Register from './opg-pages/Register';
 
+import { useState, useEffect } from 'react';
+
 function App() {
+  // useEffect(() => {
+  //   console.log(process.env.REACT_APP_API_URL)
+  // }, [])
+
+
   return (
     <Router>
       <Routes>
