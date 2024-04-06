@@ -21,7 +21,7 @@ class UserDataClass:
     id: int = None
     
     @classmethod
-    def from_instance(cls, user: "Farm"):# -> "UserDataClass":
+    def from_instance(cls, user: "Farm"):
         return cls(
             ime=user.ime,
             prezime=user.prezime,
@@ -51,13 +51,13 @@ def create_user(user_dc: "UserDataClass"):
     return UserDataClass.from_instance(instance)
 
 
-def user_email_selector(email: str): # -> "Farm":
+def user_email_selector(email: str):
     user = Farm.objects.filter(email=email).first()
     
     return user
 
 
-def create_token(user_id: int): # -> str:
+def create_token(user_id: int):
     payload = dict(
         id=user_id,
         exp=datetime.datetime.now() + datetime.timedelta(hours=24),
