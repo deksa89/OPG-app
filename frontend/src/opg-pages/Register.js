@@ -6,12 +6,12 @@ function Register() {
   const [formData, setFormData] = useState({
     ime: '',
     prezime: '',
-    nazivOPG: '',
+    naziv_opg: '',
     adresa: '',
     telefon: '',
     email: '',
-    potvrdiEmail: '',
-    lozinka: '',
+    //potvrdiEmail: '',  NAPRAVITI DA BUDE POTVRDA MAILA PRILIKOM REGISTRACIJE
+    password: '',
   });
 
   const navigate = useNavigate();
@@ -24,17 +24,17 @@ function Register() {
     }));
   };
 
-  console.log("formData: ", formData)
+  //console.log("formData: ", formData)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const response = await axios.post('http://localhost:8000/register', formData);   //TREBA SPOJITI REACT S POSTGRESQL-om
-        console.log(response.data);
+        const response = await axios.post('http://localhost:8000/api/register/', formData);
+        console.log("response: ", response);
         alert('Registracija uspješna!');
         navigate('/login');
       } catch (error) {
-        console.error('Registration error:', error);
+        console.log('Registration error:', error);
         alert('Došlo je do pogreške prilikom registracije.');
       }
   };
