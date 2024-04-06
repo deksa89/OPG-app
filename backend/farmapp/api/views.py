@@ -75,6 +75,11 @@ class CreateProduct(views.APIView):
         serializer.instance = create_product(user=request.user, product=data)
     
         return response.Response(data=serializer.data)
+
+
+class ListProducts(views.APIView):
+    authentication_classes = (CustomUserAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
     
     def get(self, request):
         product_collection = get_product(user=request.user)
