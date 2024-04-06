@@ -3,16 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function Login() {
-  const [useremail, setUseremail] = useState('');
+  const [email, setUseremail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log('Attempting to login with:', useremail, password);
+    console.log('Attempting to login with:', email, password);
 
-    axios.post('/login', { useremail, password })
+    axios.post('http://localhost:8000/api/login/', { email, password })
       .then((response) => {
+        alert('Login uspješan!');
         console.log('Login successful', response.data);
         navigate('/product_list');
       })
@@ -63,11 +64,11 @@ function Login() {
       <h2>Login</h2>
       <form onSubmit={handleLogin} style={formStyle}>
         <div>
-          <label htmlFor="useremail" style={labelStyle}>Email adresa:</label>
+          <label htmlFor="email" style={labelStyle}>Email adresa:</label>
           <input
             type="text"
-            id="useremail"
-            value={useremail}
+            id="email"
+            value={email}
             onChange={(e) => setUseremail(e.target.value)}
             style={inputStyle}
           />
