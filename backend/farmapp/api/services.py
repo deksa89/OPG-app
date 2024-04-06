@@ -3,14 +3,14 @@ import datetime
 import jwt
 from django.conf import settings
 
-from ..models import Farm
+from ..models import Farm, Product
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from ..models import Farm
+    from ..models import Farm, Product
 
 @dataclasses.dataclass
-class UserDataClass:
+class FarmDataClass:
     ime: str
     prezime: str
     naziv_opg: str
@@ -33,7 +33,7 @@ class UserDataClass:
             )
         
         
-def create_user(user_dc: "UserDataClass"):
+def create_user(user_dc: "FarmDataClass"):
     instance = Farm(
         ime = user_dc.ime,
         prezime = user_dc.prezime,
@@ -48,7 +48,7 @@ def create_user(user_dc: "UserDataClass"):
     
     instance.save()
     
-    return UserDataClass.from_instance(instance)
+    return FarmDataClass.from_instance(instance)
 
 
 def user_email_selector(email: str):
@@ -67,3 +67,37 @@ def create_token(user_id: int):
     token = jwt.encode(payload, settings.JWT_SECRET, algorithm="HS256")
     
     return token
+
+
+@dataclasses.dataclass
+class ProductDataClass:
+    name: str
+    category: str
+    detail: str
+    farm: FarmDataClass = None
+    id: int = None
+    
+    @classmethod
+    def from_instance(cls, product: "Product"):
+        return cls(
+            name=product.name,
+            category=product.category,
+            detail=product.detail,
+            id=product.id,
+            farm = product.farm
+            )
+        
+def create_product(user, product: "ProductDataClass"):
+    product_create = Product.objects.create(
+        name=product.name,
+        category=product.category,
+        detail=product.detail,
+        farm = user
+    )
+    return ProductDataClass.from_instance(product_create)
+
+
+def get_product(user: "Farm"):
+    user_product = Product.objects.filter(farm=user)
+    
+    return [ProductDataClass.from_instance(product) for product in user_product]

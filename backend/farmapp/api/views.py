@@ -1,9 +1,9 @@
 from rest_framework import views, response, permissions, exceptions
-from .serializers import FarmSerializer
-from .services import create_user, user_email_selector, create_token
+from .serializers import FarmSerializer, ProductSerializer
+from .services import create_user, user_email_selector, create_token, create_product, get_product
 from .authentication import CustomUserAuthentication
 
-class RegisterAPI(views.APIView):
+class RegisterApi(views.APIView):
     def post(self, request):
         serializer = FarmSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -16,7 +16,7 @@ class RegisterAPI(views.APIView):
 
 # we want to authenticate a user and store user's session inside a cookie
 # so that way validation and authentification are done in backend 
-class LoginAPI(views.APIView):
+class LoginApi(views.APIView):
     def post(self, request):
         email = request.data["email"]
         password = request.data["password"]
@@ -50,7 +50,7 @@ class UserApi(views.APIView):
         return response.Response(serializer.data)
     
 
-class LogoutAPI(views.APIView):
+class LogoutApi(views.APIView):
     authentication_classes = (CustomUserAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
     
@@ -60,3 +60,24 @@ class LogoutAPI(views.APIView):
         resp.data = {"message":"vidimo se uskoro!"}
         
         return resp
+    
+    
+class CreateProduct(views.APIView):
+    authentication_classes = (CustomUserAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def post(self, request):
+        serializer = ProductSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        data = serializer.validated_data
+        
+        serializer.instance = create_product(user=request.user, product=data)
+    
+        return response.Response(data=serializer.data)
+    
+    def get(self, request):
+        product_collection = get_product(user=request.user)
+        serializer = ProductSerializer(product_collection, many=True)
+        
+        return response.Response(serializer.data)

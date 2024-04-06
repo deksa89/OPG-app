@@ -1,6 +1,7 @@
 from typing import Any
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.conf import settings
 
 class UserManager(BaseUserManager):
     def create_user(self, ime: str, prezime: str, naziv_opg: str, adresa: str, telefon: str, email: str, password: str = None, is_staff=False, is_superuser=False):# -> "User":  
@@ -62,7 +63,8 @@ class Product(models.Model):
         ('vegetables_product', 'Povrće'),
     ]
     
-    farm = models.ForeignKey(Farm, on_delete=models.CASCADE)
+    # instead of Farm, it is recommended to use AUTH_USER_MODEL
+    farm = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="farm")
     name = models.CharField(max_length=100)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
     detail = models.TextField()
