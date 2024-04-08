@@ -11,11 +11,13 @@ function Login() {
     e.preventDefault();
     console.log('Attempting to login with:', email, password);
 
-    axios.post('http://localhost:8000/api/login/', { email, password })
+    axios.post('http://localhost:8000/api/login/', { email, password }, {
+      withCredentials: true,
+    })
       .then((response) => {
         alert('Login uspješan!');
-        console.log('Login successful', response.data);
-        navigate('/product_list');
+        console.log('Login successful', response);
+        navigate('/list_products');
       })
       .catch((error) => {
         console.error('Login failed', error);
@@ -62,7 +64,7 @@ function Login() {
   return (
     <div style={containerStyle}>
       <h2>Login</h2>
-      <form onSubmit={handleLogin} style={formStyle}>
+      <form onSubmit={handleLogin} style={formStyle} method='post'>
         <div>
           <label htmlFor="email" style={labelStyle}>Email adresa:</label>
           <input

@@ -44,18 +44,16 @@ INSTALLED_APPS = [
     'farmapp',
 ]
 
-CORS_ALLOWED_ORIGIN = ['http://localhost:3000']
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
 
 ROOT_URLCONF = 'moj_opg.urls'
@@ -149,5 +147,14 @@ LOGIN_REDIRECT_URL = 'list_products'
 
 AUTH_USER_MODEL = 'farmapp.Farm'
 
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',             
+                       ]
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
+
+
+# JAVLJA MI SE ERROR 403 PA POGLEDAJ U CEMU JE PROBLEM, VJEROVATNO JE PROBLEM S TOKENIMA,
+# KAD DOHVACAM PODATKE S LOCALHOST:8000 SVE RADI A S LOCALHOST:3000 NE RADI
+# POGLEDAJ TUTORIAL DJANGO + REACT I VIDI KAKO RJESAVAJU TAJ PROBLEM 

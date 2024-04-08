@@ -3,6 +3,9 @@ from .serializers import FarmSerializer, ProductSerializer
 from .services import create_user, user_email_selector, create_token, create_product, get_product
 from .authentication import CustomUserAuthentication
 
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import ensure_csrf_cookie
+
 class RegisterApi(views.APIView):
     def post(self, request):
         serializer = FarmSerializer(data=request.data)
@@ -17,6 +20,7 @@ class RegisterApi(views.APIView):
 # we want to authenticate a user and store user's session inside a cookie
 # so that way validation and authentification are done in backend 
 class LoginApi(views.APIView):
+    @method_decorator(ensure_csrf_cookie)
     def post(self, request):
         email = request.data["email"]
         password = request.data["password"]
@@ -66,6 +70,7 @@ class CreateProduct(views.APIView):
     authentication_classes = (CustomUserAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
     
+    @method_decorator(ensure_csrf_cookie)
     def post(self, request):
         serializer = ProductSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
