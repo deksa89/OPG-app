@@ -2,28 +2,47 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function ListProducts() {
-  const [data, setData] = useState([]);
-  const apiUrl = 'http://localhost:8000/api/list_products/';
+  const [prodData, setProdData] = useState([]);
+  const [userData, setUserData] = useState([]);
+  const productUrl = 'http://localhost:8000/api/list_products/';
+  const userUrl = 'http://localhost:8000/api/auth/';
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchProdData = async () => {
       try {
-        const response = await axios.get(apiUrl, {
+        const response = await axios.get(productUrl, {
             withCredentials: true,
         });
         console.log("response: ", response)
-        setData(response.data); 
+        setProdData(response.data); 
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
-    fetchData();
+    const fetchUserData = async () => {
+        try {
+          const response = await axios.get(userUrl, {
+              withCredentials: true,
+          });
+          console.log("response: ", response)
+          setUserData(response.data); 
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+
+    fetchUserData();
+    fetchProdData();
   }, []);
 
   return (
     <div>
-      {data.map((item) => (
+    {userData.map((user) => (
+        
+    ))}
+
+      {prodData.map((item) => (
           <div key={item.id}>
             <h1>{item.farm.naziv_opg}</h1>
           <p>{item.name}</p>
@@ -35,4 +54,4 @@ function ListProducts() {
   );
 }
 
-export default ListProducts;
+export default ListProducts;  //NASTAVITI OVO RADITI DA ISPISES IME VLASNIKA OPG-a NA list_product STRANICU I SVE PROIZVODE KOJE IMA NA STRANICI

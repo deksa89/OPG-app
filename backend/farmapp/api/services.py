@@ -2,6 +2,8 @@ import dataclasses
 import datetime
 import jwt
 from django.conf import settings
+from django.shortcuts import get_object_or_404
+from rest_framework import exceptions
 
 from ..models import Farm, Product
 from typing import TYPE_CHECKING
@@ -87,7 +89,7 @@ class ProductDataClass:
             farm = product.farm
             )
         
-def create_product(user, product: "ProductDataClass"):
+def add_product(user, product: "ProductDataClass"):
     product_create = Product.objects.create(
         name=product.name,
         category=product.category,
@@ -101,3 +103,25 @@ def get_product(user: "Farm"):
     user_product = Product.objects.filter(farm=user)
     
     return [ProductDataClass.from_instance(product) for product in user_product]
+
+
+def get_product_detail(user: "Farm", status_id: int):
+    status = get_object_or_404(Product, pk=status_id)
+    
+    return ProductDataClass.from_instance(status)
+
+
+def delete_product(user: "Farm", status_id: int):
+    status = get_object_or_404(Product, pk=status_id)
+   
+    status.delete()
+    
+
+def update_product(user: "Farm", status_id: int, product_data: "ProductDataClass"):
+    status = get_object_or_404(Product, pk=status_id)
+    status.name = product_data.name
+    status.category = product_data.category
+    status.detail = product_data.detail
+    status.save()
+    
+    return ProductDataClass.from_instance(status)
