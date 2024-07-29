@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import '../style/product_list.css'
 
 function ListProducts() {
   const [prodData, setProdData] = useState([]);
   const [userData, setUserData] = useState([]);
+  const navigate = useNavigate();
   const productUrl = 'http://localhost:8000/api/list_products/';
   const userUrl = 'http://localhost:8000/api/auth/';
 
@@ -13,7 +16,7 @@ function ListProducts() {
         const response = await axios.get(productUrl, {
             withCredentials: true,
         });
-        console.log("response: ", response)
+        console.log("responsesss: ", response)
         setProdData(response.data); 
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -25,7 +28,7 @@ function ListProducts() {
           const response = await axios.get(userUrl, {
               withCredentials: true,
           });
-          console.log("response: ", response)
+          console.log("response dolje: ", response)
           setUserData(response.data); 
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -36,22 +39,33 @@ function ListProducts() {
     fetchProdData();
   }, []);
 
-  return (
-    <div>
-    {userData.map((user) => (
-        
-    ))}
+  const handleProductClick = (product) => {
+    console.log("detalji: ", product)
+    navigate(`/get_product/${product.id}`);
+  };
 
-      {prodData.map((item) => (
-          <div key={item.id}>
-            <h1>{item.farm.naziv_opg}</h1>
-          <p>{item.name}</p>
-          <p>{item.category}</p>
-          <p>{item.detail}</p>
+  return (
+    <div className="container">
+      {userData ? (
+        <div className="user-info">
+          <p className="opg-name">{userData.naziv_opg}</p>
+          <p className="user-name">{userData.ime} {userData.prezime}</p>
         </div>
-      ))}
+      ) : (
+        <p>Loading user data...</p>
+      )}
+
+      <div className="products-list">
+        {prodData.map((item) => (
+          <div key={item.id} className="product-item" onClick={() => handleProductClick(item)}>
+            <p className="product-name">{item.name}</p>
+            <p className="product-category">{item.category}</p>
+            <p className="product-detail">{item.detail}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
 
-export default ListProducts;  //NASTAVITI OVO RADITI DA ISPISES IME VLASNIKA OPG-a NA list_product STRANICU I SVE PROIZVODE KOJE IMA NA STRANICI
+export default ListProducts;

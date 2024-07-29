@@ -1,0 +1,72 @@
+/* General container styling */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #a7ff4e;
+    color: #333;
+    width: 100%;
+    height: 100vh; /* Full height */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  }
+  
+  /* User info styling */
+  .user-info {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  .opg-name, .user-name {
+    font-size: 1.8em;
+    margin: 10px 0;
+    color: #555;
+  }
+  
+  /* Products list styling */
+  .products-list {
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  /* Product item styling */
+  .product-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    cursor: pointer;
+  }
+  
+  .product-item p {
+    margin: 0;
+    font-size: 1em;
+    color: #666;
+  }
+  
+  .product-name {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  

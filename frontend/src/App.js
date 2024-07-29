@@ -4,6 +4,7 @@ import WelcomePage from './opg-pages/WelcomePage';
 import Login from './opg-pages/Login';
 import Register from './opg-pages/Register';
 import ListProducts from './opg-pages/ProductList';
+import ProductDetail from './opg-pages/ProductDetail';
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/list_products" element={<ListProducts />} />
+        <Route path="/get_product/:status_id" element={<ProductDetail />} />
       </Routes>
     </Router>
   );
