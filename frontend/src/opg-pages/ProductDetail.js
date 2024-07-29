@@ -36,7 +36,7 @@ const ProductDetail = () => {
       ) : (
         <p>Loading product data...</p>
       )}
-    </div> // NAPRAVITI BACK BUTTON
+    </div> // NAPRAVITI BACK BUTTON I OSTALE RUTE
   );
 }
 
