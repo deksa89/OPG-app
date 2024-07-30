@@ -3,6 +3,13 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../style/product_list.css'
 
+
+const categoryMapping = {
+  'milk_product': 'Mliječni proizvodi',
+  'fruit_product': 'Voće',
+  'vegetables_product': 'Povrće',
+};
+
 function ListProducts() {
   const [prodData, setProdData] = useState([]);
   const [userData, setUserData] = useState([]);
@@ -18,8 +25,11 @@ function ListProducts() {
         const response = await axios.get(productUrl, {
             withCredentials: true,
         });
-        console.log("responsesss: ", response)
-        setProdData(response.data); 
+        const products = response.data.map(product => ({
+          ...product,
+          category: categoryMapping[product.category] || product.category,
+        }));
+        setProdData(products); 
       } catch (error) {
         console.error('Error fetching data:', error);
       }

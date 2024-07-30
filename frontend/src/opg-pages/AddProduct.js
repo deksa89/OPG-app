@@ -3,6 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../style/product_detail.css';
 
+const categoryMapping = {
+  'milk_product': 'Mliječni proizvodi',
+  'fruit_product': 'Voće',
+  'vegetables_product': 'Povrće',
+};
+
+const reverseCategoryMapping = {
+  'Mliječni proizvodi': 'milk_product',
+  'Voće': 'fruit_product',
+  'Povrće': 'vegetables_product',
+};
+
 function AddProduct() {
   const navigate = useNavigate();
   const [product, setProduct] = useState({
@@ -21,7 +33,8 @@ function AddProduct() {
 
   const handleSave = async () => {
     try {
-      await axios.post('http://localhost:8000/api/add_product/', product, {
+      const newProduct = { ...product, category: reverseCategoryMapping[product.category] };
+      await axios.post('http://localhost:8000/api/add_product/', newProduct, {
         withCredentials: true,
       });
       alert("Product added successfully!");
@@ -36,14 +49,18 @@ function AddProduct() {
       <div className="prod-info">
         <div className="prod-field">
           <label className="prod-label" htmlFor="category">Category</label>
-          <input
+          <select
             className="prod-input"
-            type="text"
             id="category"
             name="category"
             value={product.category}
             onChange={handleInputChange}
-          />
+          >
+            <option value="">Select a category</option>
+            {Object.keys(categoryMapping).map(key => (
+              <option key={key} value={categoryMapping[key]}>{categoryMapping[key]}</option>
+            ))}
+          </select>
         </div>
         <div className="prod-field">
           <label className="prod-label" htmlFor="name">Name</label>
