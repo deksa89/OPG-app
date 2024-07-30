@@ -6,6 +6,8 @@ import '../style/product_list.css'
 function ListProducts() {
   const [prodData, setProdData] = useState([]);
   const [userData, setUserData] = useState([]);
+  const [popupMessage, setPopupMessage] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
   const productUrl = 'http://localhost:8000/api/list_products/';
   const userUrl = 'http://localhost:8000/api/auth/';
@@ -44,6 +46,30 @@ function ListProducts() {
     navigate(`/get_product/${product.id}`);
   };
 
+
+  const handleDelete = async (status_id) => {
+    try {
+      await axios.delete(`http://localhost:8000/api/delete_product/${status_id}`, {
+        withCredentials: true,
+      });
+      const deletedProduct = prodData.find(product => product.id === status_id);
+      setPopupMessage(`${deletedProduct.name} is deleted`);
+      setShowPopup(true);
+      setProdData(prodData.filter(product => product.id !== status_id));
+      setTimeout(() => setShowPopup(false), 2000);
+    } catch (error) {
+      console.error('Error deleting product:', error);
+    }
+  };
+
+  const handleEdit = (status_id) => {
+    navigate(`/update_product/${status_id}`);
+  };
+
+  const handleAddProduct = () => {
+    navigate('/add_product');
+  };
+
   return (
     <div className="container">
       {userData ? (
@@ -56,14 +82,23 @@ function ListProducts() {
       )}
 
       <div className="products-list">
-        {prodData.map((item) => (
-          <div key={item.id} className="product-item" onClick={() => handleProductClick(item)}>
-            <p className="product-name">{item.name}</p>
-            <p className="product-category">{item.category}</p>
-            <p className="product-detail">{item.detail}</p>
+        {prodData.map((product) => (
+          <div key={product.id} className="product-item">
+            <p className="product-name" onClick={() => handleProductClick(product)}>{product.name}</p>
+            <p className="product-category">{product.category}</p>
+            <p className="product-detail">{product.detail}</p>
+            <button className="add-button" onClick={() => handleAddProduct()}>Add Product</button>
+            <button className="edit-button" onClick={() => handleEdit(product.id)}>Edit</button>
+            <button className="delete-button" onClick={() => handleDelete(product.id)}>Delete</button>
           </div>
         ))}
       </div>
+
+      {showPopup && (
+        <div className="popup">
+          {popupMessage}
+        </div>
+      )}
     </div>
   );
 }

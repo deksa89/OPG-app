@@ -29,14 +29,14 @@ const ProductDetail = () => {
     <div className="container">
       {prodDetail ? (
         <div className="prod-info">
-          <p className="prod-category">{prodDetail.category}</p>
           <p className="prod-name">{prodDetail.name}</p>
+          <p className="prod-category">{prodDetail.category}</p>
           <p className="prod-detail">{prodDetail.detail}</p>
         </div>
       ) : (
         <p>Loading product data...</p>
       )}
-    </div> // NAPRAVITI BACK BUTTON I OSTALE RUTE
+    </div>
   );
 }
 
